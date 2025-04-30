@@ -13,3 +13,42 @@ test "Neo con crédito no puede llevar un paquete que no está pago a la matrix"
   paquete.estaPago()
   assert.that((matrix.dejaPasar(neo)))
 }
+
+test "La empresa es grande al contratar a neo"{
+  mensajeria.contratar(neo)
+  assert.that(mensajeria.esGrande())
+}
+
+test "La empresa deja de ser grande al depedir a roberto y chuck"{
+  mensajeria.despedir(roberto)
+  mensajeria.despedir(chuckNorris)
+  assert.notThat(mensajeria.esGrande())
+}
+
+test "La empresa deja de ser grande al depedir a todos"{
+  mensajeria.despedirATodos()
+  assert.notThat(mensajeria.esGrande())
+}
+
+test "Roberto no puede entregar el paquete"{
+  assert.notThat(mensajeria.elPrimerMensajeroPuedeEntregar(paquete))
+}
+
+test "Chuck pesa 80 kg"{
+  assert.equals(80, mensajeria.pesoDelUltimoMensajero())
+}
+
+test "facturacion con el paquete sin pagar"{
+  empresa.enviar(paquete)
+  empresa.enviar(paquetito)
+  empresa.enviar(paqueton)
+  assert.equals(50,empresa.facturacion())
+}
+
+test "facturación con el paqueton pagado"{
+  empresa.enviar(paquete)
+  empresa.enviar(paquetito)
+  paqueton.pagar(200)
+  empreso.enviar(paqueton)
+  assert.equals(50,empresa.facturacion())
+}
